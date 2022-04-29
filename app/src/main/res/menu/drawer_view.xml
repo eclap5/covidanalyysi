@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:checked="true"
+            android:id="@+id/nav_first_fragment"
+            android:title="CovidAnalyysi" />
+        <item
+            android:id="@+id/nav_second_fragment"
+            android:title="Sairaanhoitopiirit" />
+        <item
+            android:id="@+id/nav_third_fragment"
+            android:title="Suosikit" />
+        <item
+            android:id="@+id/nav_fourth_fragment"
+            android:title="Tietoa" />
+    </group>
+</menu>

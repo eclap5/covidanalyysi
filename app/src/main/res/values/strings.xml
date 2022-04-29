@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">covidanalyysi</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string
+        name="link1"><a href="https://thl.fi/fi/web/infektiotaudit-ja-rokotukset/ajankohtaista/ajankohtaista-koronaviruksesta-covid-19/oireet-ja-hoito-koronavirus/koronaviruksen-hoito-ja-ohjeet-sairastuneelle">
+        Avaa linkki painamalla tästä</a>
+    </string>
+    <string
+        name="link2"><a href="https://thl.fi/fi/web/infektiotaudit-ja-rokotukset/ajankohtaista/ajankohtaista-koronaviruksesta-covid-19/oireet-ja-hoito-koronavirus/koronataudin-jalkeen">
+        Avaa linkki painamalla tästä</a>
+    </string>
+    <string
+        name="link3"><a href="https://thl.fi/fi/web/infektiotaudit-ja-rokotukset/ajankohtaista/ajankohtaista-koronaviruksesta-covid-19/oireet-ja-hoito-koronavirus/koronavirustestit">
+        Avaa linkki painamalla tästä</a>
+    </string>
+</resources>

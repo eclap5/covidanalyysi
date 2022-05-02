@@ -1,8 +1,5 @@
 package com.example.covidanalyysi;
 
-import static java.time.temporal.ChronoUnit.WEEKS;
-
-import androidx.annotation.NonNull;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,12 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 // JSON data is read in this class, and it has been implemented
 // using singleton, so data will remain unaltered during execution.
@@ -125,7 +117,7 @@ public class covidData
                 for (int k = 0; k < DW_key.length(); k++, j++)
                 {
                     String DW_keys = DW_key.getString(k);
-                    if (DW_index.getInt(DW_keys) == ((158 - 53) + time.getWeekNum()))
+                    if (DW_index.getInt(DW_keys) == ((158 - 52) + time.getWeekNum() - 1))
                     {
                         break;
                     }

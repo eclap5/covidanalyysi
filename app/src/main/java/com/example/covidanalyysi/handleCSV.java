@@ -16,9 +16,10 @@ import java.util.ArrayList;
 // Healthcare districts ID is stored to arraylist as String and content of arraylist is written to file.
 public class handleCSV
 {
-    private String CSVData = "";
+    private String CSVData;
     private ArrayList<String> dataList = new ArrayList<>();
     covidData JSONData = covidData.getInstance();
+    CredentialsDataBase credentialsDataBase = CredentialsDataBase.getInstance();
 
     private handleCSV()
     {
@@ -47,13 +48,14 @@ public class handleCSV
 
     public void writeCSV(Context c)
     {
+        CSVData = credentialsDataBase.getUsername() + ";";
         for (int i = 0; i < dataList.size(); i++)
         {
             CSVData += dataList.get(i) + ";";
         }
         try {
             OutputStreamWriter ows = new OutputStreamWriter(c.openFileOutput("favourites.csv", Context.MODE_PRIVATE));
-            ows.write(CSVData);
+            ows.write(CSVData + "\n");
             ows.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -62,38 +64,44 @@ public class handleCSV
         }
     }
 
+
+    // This method reads spesific line of favourites added to favourites.CSV file based on username which is added
+    // to the same line with favourites IDs.
     public String readCSV(Context c)
     {
-        String s;
-        String var = "";
+        String line;
+        String CSVData = "";
         try {
             InputStream ins = c.openFileInput("favourites.csv");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
 
-            while ((s = br.readLine()) != null)
+            while ((line = br.readLine()) != null)
             {
-                var = s;
+                if (line.contains(credentialsDataBase.getUsername()))
+                {
+                    CSVData = line;
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return var;
+        return CSVData;
     }
 
 
     // When program is started with this method favourites are added to
     // arraylist based on ID in the file.
     public void getFavouritesFromCSV(Context c) {
-        String var = readCSV(c);
+        String CSVData = readCSV(c);
         String favData[];
 
-        if (var != "")
+        if (CSVData != "")
         {
-            favData = var.split(";");
-            for (int i = 0; i < favData.length; i++)
+            favData = CSVData.split(";");
+            for (int i = 1; i < favData.length; i++)
             {
                 for (int j = 0; j < JSONData.getHCD_array().size(); j++)
                 {

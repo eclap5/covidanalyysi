@@ -43,9 +43,6 @@ public class MainActivity extends AppCompatActivity {
         jsonData.sortData();
         jsonData.getHCD_array().get(jsonData.getHCDId()).getInfPerWeek();
 
-        handleCSV handler = handleCSV.getInstance();
-        handler.getFavouritesFromCSV(context);
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -24,6 +24,7 @@ public class favourites extends Fragment
     Button button;
     covidData JSONData = covidData.getInstance();
     handleCSV handler = handleCSV.getInstance();
+    CredentialsDataBase credentialsDataBase = CredentialsDataBase.getInstance();
 
     @Nullable
     @Override
@@ -34,6 +35,7 @@ public class favourites extends Fragment
         button = (Button) v.findViewById(R.id.button4);
         ArrayAdapter<healthCareDistrict> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, JSONData.getFav_Array());
         listView.setAdapter(adapter);
+
 
         // When clicking an item in ListView the fragment is changed to HCDSelection and current HCDId is
         // changed to the healthcare district clicked from favourites.
@@ -56,12 +58,20 @@ public class favourites extends Fragment
             }
         });
 
+
         // Favourites will be saved to CSV file when clicking the button.
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handler.writeCSV(getActivity().getApplicationContext());
-                Toast.makeText(getContext(), "Suosikit tallennettu", Toast.LENGTH_SHORT).show();
+                if (credentialsDataBase.getLogInStatus())
+                {
+                    handler.writeCSV(getActivity().getApplicationContext());
+                    Toast.makeText(getContext(), "Suosikit tallennettu", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Kirjaudu sisään tallentaaksesi suosikkeja", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

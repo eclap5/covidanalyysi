@@ -18,8 +18,10 @@ import java.time.format.DateTimeFormatter;
 public class home extends Fragment
 {
     covidData jsonData = covidData.getInstance();
+    CredentialsDataBase credentialsDataBase = CredentialsDataBase.getInstance();
     TextView infecs;
     TextView date;
+    TextView userText;
     int infNum = 0;
     String value = "";
 
@@ -31,6 +33,14 @@ public class home extends Fragment
 
         infecs = (TextView) v.findViewById(R.id.infections);
         date = (TextView) v.findViewById(R.id.date);
+        userText = (TextView) v.findViewById(R.id.userText);
+
+        // Welcomes user if logged in.
+        if (credentialsDataBase.getLogInStatus())
+        {
+            String text = "Tervetuloa " + credentialsDataBase.getUsername() + "!";
+            userText.setText(text);
+        }
 
         // Sets the value for all infections from the start time of data to the current date.
         infNum = jsonData.getHCD_array().get(21).getWeeklyInfections(jsonData.getHCD_array().get(jsonData.getHCDId()).getMaxWeekNum());

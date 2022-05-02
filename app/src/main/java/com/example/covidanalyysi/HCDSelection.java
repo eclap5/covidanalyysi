@@ -33,6 +33,7 @@ public class HCDSelection extends Fragment
 
     covidData JSONData = covidData.getInstance();
     handleCSV handler = handleCSV.getInstance();
+    CredentialsDataBase credentialsDataBase = CredentialsDataBase.getInstance();
     sortWeeks time = new sortWeeks();
 
     private int weekId1;
@@ -156,15 +157,22 @@ public class HCDSelection extends Fragment
         });
 
 
-        // Adds current ID to the arraylist in handleCSV class
+        // Adds current ID to the favourite arraylist in handleCSV class
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                JSONData.addFavourites(JSONData.getHCD_array().get(JSONData.getHCDId()));
-                button3.setVisibility(v.VISIBLE);
-                Toast.makeText(getContext(), "Lisätty suosikkeihin", Toast.LENGTH_SHORT).show();
-                handler.setCSVData(String.valueOf(JSONData.getHCDId()));
+                if (credentialsDataBase.getLogInStatus())
+                {
+                    JSONData.addFavourites(JSONData.getHCD_array().get(JSONData.getHCDId()));
+                    button3.setVisibility(v.VISIBLE);
+                    Toast.makeText(getContext(), "Lisätty suosikkeihin", Toast.LENGTH_SHORT).show();
+                    handler.setCSVData(String.valueOf(JSONData.getHCDId()));
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Kirjaudu sisään lisätäksesi suosikkeja", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

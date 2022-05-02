@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
+// Sets the functionalities for the information interface fragment_information.
 public class information extends Fragment
 {
     TextView linkText;

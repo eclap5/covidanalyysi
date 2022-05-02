@@ -1,5 +1,6 @@
 package com.example.covidanalyysi;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +17,9 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+
+// This class is the main activity of this application.
+// Only functionality implemented in this class is navigation drawer.
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
@@ -112,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_fourth_fragment:
                 fragmentClass = information.class;
                 break;
+            case R.id.nav_fifth_fragment:
+                fragmentClass = Login.class;
+                break;
             default:
                 fragmentClass = home.class;
         }
@@ -136,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
         switch (item.getItemId())
         {

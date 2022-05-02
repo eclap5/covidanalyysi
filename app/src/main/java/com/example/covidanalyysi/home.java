@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
+// This class implements the functionalities for home screen interface fragment_home.
 public class home extends Fragment
 {
     covidData jsonData = covidData.getInstance();
@@ -30,6 +32,7 @@ public class home extends Fragment
         infecs = (TextView) v.findViewById(R.id.infections);
         date = (TextView) v.findViewById(R.id.date);
 
+        // Sets the value for all infections from the start time of data to the current date.
         infNum = jsonData.getHCD_array().get(21).getWeeklyInfections(jsonData.getHCD_array().get(jsonData.getHCDId()).getMaxWeekNum());
         value = String.valueOf(infNum);
         infecs.setText(value);

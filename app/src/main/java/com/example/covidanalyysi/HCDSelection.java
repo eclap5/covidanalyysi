@@ -18,6 +18,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 
+// This class implements the functionalities for interface of fragment_hcd_selection.
+// In this interface user can choose healthcare district and time to see amount of infections
+// on that area and time.
 public class HCDSelection extends Fragment
 {
     Spinner spinner;
@@ -96,6 +99,9 @@ public class HCDSelection extends Fragment
             }
         });
 
+
+        // With the "Hae" button user will get to see infections on selected timeframe but also
+        // the change to previous week is shown.
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -107,7 +113,7 @@ public class HCDSelection extends Fragment
                 int current;
                 char prefix = ' ';
 
-                if (weekId1 <= (158-52) + time.getWeekNum())
+                if (weekId1 < (158-53) + time.getWeekNum())
                 {
                     current = JSONData.getHCD_array().get(JSONData.getHCDId()).getWeeklyInfections(weekId1);
 
@@ -149,6 +155,8 @@ public class HCDSelection extends Fragment
 
         });
 
+
+        // Adds current ID to the arraylist in handleCSV class
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -160,6 +168,8 @@ public class HCDSelection extends Fragment
             }
         });
 
+
+        // Sets the visibility of "Poista suosikeista" button according if current object is in favourites.
         if (JSONData.getFav_Array().contains(JSONData.getHCD_array().get(JSONData.getHCDId())))
         {
             button3.setVisibility(v.VISIBLE);
@@ -169,6 +179,8 @@ public class HCDSelection extends Fragment
             button3.setVisibility(v.GONE);
         }
 
+
+        // Deletes current object from favourites.
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -182,6 +194,8 @@ public class HCDSelection extends Fragment
         return v;
     }
 
+
+    // Sets data from current healthcare district in spinner to the textfield.
     public String setData(int id)
     {
         String data = "";

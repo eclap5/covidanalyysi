@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+
+// This class handles time and weekly strings from DW_labels JSON object.
 public class sortWeeks
 {
     public sortWeeks()
@@ -19,6 +21,7 @@ public class sortWeeks
 
     }
 
+    // This method returns current week number.
     public int getWeekNum()
     {
         int weekNum = 0;
@@ -31,6 +34,9 @@ public class sortWeeks
         return weekNum;
     }
 
+
+    // This method sorts the weekly strings from JSON object "DW_labels"
+    // and adds the strings to an arraylist.
     public ArrayList<String> getWeekArray(JSONObject DW_labels)
     {
         ArrayList<String> weekArray = new ArrayList<>();
@@ -52,6 +58,9 @@ public class sortWeeks
         return weekArray;
     }
 
+
+    // This method converts the weekly strings in arraylist to more readable form
+    // so it will be easier for user to specify time scale.
     public void convertWeeks(@NonNull ArrayList<String> weekArray)
     {
         Date date;

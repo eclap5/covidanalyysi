@@ -2,6 +2,8 @@ package com.example.covidanalyysi;
 
 import java.util.HashMap;
 
+
+// Class for healthcare district type objects.
 public class healthCareDistrict
 {
     private String districtName = "";
@@ -9,6 +11,8 @@ public class healthCareDistrict
     private int weekNum = 0;
     private int weeklyInfections = 0;
 
+
+    // Weekly infections are stored in HashMap with week number as key object.
     private HashMap<Integer, Integer> infPerWeek = new HashMap<Integer, Integer>();
 
     public healthCareDistrict()
@@ -62,6 +66,8 @@ public class healthCareDistrict
         return districtName;
     }
 
+
+    // Returns the number of weeks in hashmap.
     public int getMaxWeekNum()
     {
         int maxWeekNum = 0;
@@ -69,7 +75,6 @@ public class healthCareDistrict
         for (int i = 1; i < infPerWeek.size(); i++) {
             maxWeekNum++;
         }
-        System.out.println(maxWeekNum);
         return maxWeekNum;
     }
 

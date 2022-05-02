@@ -16,7 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
-
+// This class implements the functionalities of fragment_favourites interface.
+// Implementation made with ListView to show users favourites.
 public class favourites extends Fragment
 {
     ListView listView;
@@ -33,6 +34,9 @@ public class favourites extends Fragment
         button = (Button) v.findViewById(R.id.button4);
         ArrayAdapter<healthCareDistrict> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, JSONData.getFav_Array());
         listView.setAdapter(adapter);
+
+        // When clicking an item in ListView the fragment is changed to HCDSelection and current HCDId is
+        // changed to the healthcare district clicked from favourites.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
@@ -52,6 +56,7 @@ public class favourites extends Fragment
             }
         });
 
+        // Favourites will be saved to CSV file when clicking the button.
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

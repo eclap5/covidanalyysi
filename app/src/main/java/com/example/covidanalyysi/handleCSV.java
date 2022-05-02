@@ -10,6 +10,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
+
+// In this class the CSV file which saves the favourites is written and read.
+// Implemented using singleton so marked favourites won't get overwritten if changed.
+// Healthcare districts ID is stored to arraylist as String and content of arraylist is written to file.
 public class handleCSV
 {
     private String CSVData = "";
@@ -79,6 +83,9 @@ public class handleCSV
         return var;
     }
 
+
+    // When program is started with this method favourites are added to
+    // arraylist based on ID in the file.
     public void getFavouritesFromCSV(Context c) {
         String var = readCSV(c);
         String favData[];

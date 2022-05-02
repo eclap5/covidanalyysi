@@ -32,6 +32,9 @@ public class covidData
     private ArrayList<healthCareDistrict> HCD_array = new ArrayList<>();
     private ArrayList<healthCareDistrict> fav_Array = new ArrayList<>();
     private JSONObject DW_labels = null;
+
+    // Current spinner healthcare district id.
+    // Default to 21 "Kaikki alueet".
     private int HCDId = 21;
     private int favIndex;
     sortWeeks time = new sortWeeks();
@@ -48,6 +51,9 @@ public class covidData
         return JSONData;
     }
 
+
+    // In this method JSON data is retrieved from THL open data source.
+    // This method returns a JSON object containing all the data from data source.
     private JSONObject getJSON()
     {
         JSONObject all = null;
@@ -80,6 +86,11 @@ public class covidData
         return all;
     }
 
+
+    // In this method data is first split into smaller objects.
+    // Also objects are made from healthCareDistrict.java and the values
+    // of sorted THL data are added to the objects.
+    // Objects are added to the arraylist HCD_array.
     public void sortData()
     {
         int j = 0;
@@ -114,7 +125,7 @@ public class covidData
                 for (int k = 0; k < DW_key.length(); k++, j++)
                 {
                     String DW_keys = DW_key.getString(k);
-                    if (DW_index.getInt(DW_keys) == ((158 - 52) + time.getWeekNum()))
+                    if (DW_index.getInt(DW_keys) == ((158 - 53) + time.getWeekNum()))
                     {
                         break;
                     }
@@ -134,6 +145,8 @@ public class covidData
         }
     }
 
+
+    // This method adds an object to the arraylist containing favourites. (fav_Array)
     public void addFavourites(healthCareDistrict fav)
     {
         fav_Array.add(fav);
@@ -149,6 +162,9 @@ public class covidData
         return HCD_array;
     }
 
+
+    // HCDId variable defines the id of the current healthcare district shown in the spinner widget
+    // so these methods are for usage of current HCD.
     public void setHCDId(int newId)
     {
         HCDId = newId;
@@ -159,6 +175,8 @@ public class covidData
         return HCDId;
     }
 
+
+    // favIndex is used to get the index of current favourite from an arraylist fav_Array.
     public void setFavIndex(int i)
     {
         favIndex = i;
@@ -169,6 +187,9 @@ public class covidData
         return favIndex;
     }
 
+
+    // This method returns the JSON object containing weeks and years as Strings.
+    // Used to format time selection spinner items to a readable form.
     public JSONObject getDW_labels()
     {
         return DW_labels;

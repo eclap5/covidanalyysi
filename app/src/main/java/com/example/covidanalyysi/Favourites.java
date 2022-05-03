@@ -18,12 +18,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 // This class implements the functionalities of fragment_favourites interface.
 // Implementation made with ListView to show users favourites.
-public class favourites extends Fragment
+public class Favourites extends Fragment
 {
     ListView listView;
     Button button;
-    covidData JSONData = covidData.getInstance();
-    handleCSV handler = handleCSV.getInstance();
+    CovidData JSONData = CovidData.getInstance();
+    HandleCSV handler = HandleCSV.getInstance();
     CredentialsDataBase credentialsDataBase = CredentialsDataBase.getInstance();
 
     @Nullable
@@ -33,7 +33,7 @@ public class favourites extends Fragment
         View v = inflater.inflate(R.layout.fragment_favourites, container, false);
         listView = (ListView)v.findViewById(R.id.listview);
         button = (Button) v.findViewById(R.id.button4);
-        ArrayAdapter<healthCareDistrict> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, JSONData.getFav_Array());
+        ArrayAdapter<HealthCareDistrict> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, JSONData.getFavouritesArray());
         listView.setAdapter(adapter);
 
 
@@ -52,7 +52,7 @@ public class favourites extends Fragment
                     e.printStackTrace();
                 }
                 JSONData.setFavIndex(i);
-                JSONData.setHCDId(JSONData.getFav_Array().get(i).getId());
+                JSONData.setHCDId(JSONData.getFavouritesArray().get(i).getId());
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                         transaction.replace(((ViewGroup)getView().getParent()).getId(), fragment).addToBackStack(null).commit();
             }

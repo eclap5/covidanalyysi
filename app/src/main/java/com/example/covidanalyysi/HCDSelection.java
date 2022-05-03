@@ -1,6 +1,5 @@
 package com.example.covidanalyysi;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 
@@ -31,12 +29,12 @@ public class HCDSelection extends Fragment
     Button button2;
     Button button3;
 
-    covidData JSONData = covidData.getInstance();
-    handleCSV handler = handleCSV.getInstance();
+    CovidData JSONData = CovidData.getInstance();
+    HandleCSV handler = HandleCSV.getInstance();
     CredentialsDataBase credentialsDataBase = CredentialsDataBase.getInstance();
-    sortWeeks time = new sortWeeks();
+    SortWeeks time = new SortWeeks();
 
-    private int weekId1;
+    private int weekId;
 
     @Nullable
     @Override
@@ -55,10 +53,10 @@ public class HCDSelection extends Fragment
 
         button3.setVisibility(v.GONE);
 
-        ArrayAdapter<healthCareDistrict> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, JSONData.getHCD_array());
+        ArrayAdapter<HealthCareDistrict> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, JSONData.getHCDArray());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
-        spinner.setSelection(adapter.getPosition(JSONData.getHCD_array().get(JSONData.getHCDId())), false);
+        spinner.setSelection(adapter.getPosition(JSONData.getHCDArray().get(JSONData.getHCDId())), false);
         textBox.setText(setData(JSONData.getHCDId()));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -68,7 +66,7 @@ public class HCDSelection extends Fragment
             {
                 JSONData.setHCDId(i);
                 textBox.setText(setData(i));
-                if (JSONData.getFav_Array().contains(JSONData.getHCD_array().get(i)))
+                if (JSONData.getFavouritesArray().contains(JSONData.getHCDArray().get(i)))
                 {
                     button3.setVisibility(v.VISIBLE);
                 }
@@ -84,14 +82,14 @@ public class HCDSelection extends Fragment
             }
         });
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, time.getWeekArray(JSONData.getDW_labels()));
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, time.getWeekArray(JSONData.getDWLabels()));
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner2.setAdapter(adapter1);
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
-                weekId1 = i;
+                weekId = i + 1;
             }
 
             @Override
@@ -114,17 +112,17 @@ public class HCDSelection extends Fragment
                 int current;
                 char prefix = ' ';
 
-                if (weekId1 < (158-53) + time.getWeekNum())
+                if (weekId < (157-52) + time.getWeekNum())
                 {
-                    current = JSONData.getHCD_array().get(JSONData.getHCDId()).getWeeklyInfections(weekId1);
+                    current = JSONData.getHCDArray().get(JSONData.getHCDId()).getWeeklyInfections(weekId);
 
-                    if (current == JSONData.getHCD_array().get(JSONData.getHCDId()).getWeeklyInfections(0))
+                    if (current == JSONData.getHCDArray().get(JSONData.getHCDId()).getWeeklyInfections(1))
                     {
                         diff = 0;
                     }
                     else
                     {
-                        prev = JSONData.getHCD_array().get(JSONData.getHCDId()).getWeeklyInfections(weekId1 - 1);
+                        prev = JSONData.getHCDArray().get(JSONData.getHCDId()).getWeeklyInfections(weekId - 1);
                         if (prev > current)
                         {
                             diff = prev - current;
@@ -164,7 +162,7 @@ public class HCDSelection extends Fragment
             {
                 if (credentialsDataBase.getLogInStatus())
                 {
-                    JSONData.addFavourites(JSONData.getHCD_array().get(JSONData.getHCDId()));
+                    JSONData.addFavourites(JSONData.getHCDArray().get(JSONData.getHCDId()));
                     button3.setVisibility(v.VISIBLE);
                     Toast.makeText(getContext(), "Lisätty suosikkeihin", Toast.LENGTH_SHORT).show();
                     handler.setCSVData(String.valueOf(JSONData.getHCDId()));
@@ -178,7 +176,7 @@ public class HCDSelection extends Fragment
 
 
         // Sets the visibility of "Poista suosikeista" button according if current object is in favourites.
-        if (JSONData.getFav_Array().contains(JSONData.getHCD_array().get(JSONData.getHCDId())))
+        if (JSONData.getFavouritesArray().contains(JSONData.getHCDArray().get(JSONData.getHCDId())))
         {
             button3.setVisibility(v.VISIBLE);
         }
@@ -194,7 +192,7 @@ public class HCDSelection extends Fragment
             public void onClick(View view)
             {
                 Toast.makeText(getContext(), "Poistettu suosikeista", Toast.LENGTH_SHORT).show();
-                JSONData.getFav_Array().remove(JSONData.getFavIndex());
+                JSONData.getFavouritesArray().remove(JSONData.getFavIndex());
                 button3.setVisibility(v.GONE);
                 handler.removeFromCSV(JSONData.getHCDId());
             }
@@ -203,11 +201,11 @@ public class HCDSelection extends Fragment
     }
 
 
-    // Sets data from current healthcare district in spinner to the textfield.
+    // Sets data from current healthcare district in spinner to the text field.
     public String setData(int id)
     {
         String data = "";
-        data = JSONData.getHCD_array().get(id).getDistrictName() + "\n" + "Tartunnat yhteensä: " + JSONData.getHCD_array().get(id).getWeeklyInfections(JSONData.getHCD_array().get(JSONData.getHCDId()).getMaxWeekNum());
+        data = JSONData.getHCDArray().get(id).getDistrictName() + "\n" + "Tartunnat yhteensä: " + JSONData.getHCDArray().get(id).getWeeklyInfections(JSONData.getHCDArray().get(JSONData.getHCDId()).getMaxWeekNum());
         return data;
     }
 }

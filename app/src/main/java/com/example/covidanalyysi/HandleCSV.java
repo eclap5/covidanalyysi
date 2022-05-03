@@ -14,21 +14,21 @@ import java.util.ArrayList;
 // In this class the CSV file which saves the favourites is written and read.
 // Implemented using singleton so marked favourites won't get overwritten if changed.
 // Healthcare districts ID is stored to arraylist as String and content of arraylist is written to file.
-public class handleCSV
+public class HandleCSV
 {
     private String CSVData;
     private ArrayList<String> dataList = new ArrayList<>();
-    covidData JSONData = covidData.getInstance();
+    CovidData JSONData = CovidData.getInstance();
     CredentialsDataBase credentialsDataBase = CredentialsDataBase.getInstance();
 
-    private handleCSV()
+    private HandleCSV()
     {
 
     }
 
-    private static handleCSV handler = new handleCSV();
+    private static HandleCSV handler = new HandleCSV();
 
-    public static handleCSV getInstance()
+    public static HandleCSV getInstance()
     {
         return handler;
     }
@@ -65,7 +65,7 @@ public class handleCSV
     }
 
 
-    // This method reads spesific line of favourites added to favourites.CSV file based on username which is added
+    // This method reads specific line of favourites added to favourites.CSV file based on username which is added
     // to the same line with favourites IDs.
     public String readCSV(Context c)
     {
@@ -103,11 +103,11 @@ public class handleCSV
             favData = CSVData.split(";");
             for (int i = 1; i < favData.length; i++)
             {
-                for (int j = 0; j < JSONData.getHCD_array().size(); j++)
+                for (int j = 0; j < JSONData.getHCDArray().size(); j++)
                 {
-                    if (JSONData.getHCD_array().get(j).getId() == Integer.parseInt(favData[i]))
+                    if (JSONData.getHCDArray().get(j).getId() == Integer.parseInt(favData[i]))
                     {
-                        JSONData.addFavourites(JSONData.getHCD_array().get(j));
+                        JSONData.addFavourites(JSONData.getHCDArray().get(j));
                     }
                 }
             }

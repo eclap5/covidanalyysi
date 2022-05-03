@@ -4,18 +4,17 @@ import java.util.HashMap;
 
 
 // Class for healthcare district type objects.
-public class healthCareDistrict
+public class HealthCareDistrict
 {
     private String districtName = "";
     private int id = 0;
-    private int weekNum = 0;
     private int weeklyInfections = 0;
 
 
     // Weekly infections are stored in HashMap with week number as key object.
-    private HashMap<Integer, Integer> infPerWeek = new HashMap<Integer, Integer>();
+    private HashMap<Integer, Integer> infectionsPerWeek = new HashMap<Integer, Integer>();
 
-    public healthCareDistrict()
+    public HealthCareDistrict()
     {
 
     }
@@ -30,14 +29,9 @@ public class healthCareDistrict
         districtName = disName;
     }
 
-    public void setWeekNum(int wNum)
-    {
-        weekNum = wNum;
-    }
-
     public void setWeeklyInfections(int weekNum, int inf)
     {
-        infPerWeek.put(weekNum, inf);
+        infectionsPerWeek.put(weekNum, inf);
     }
 
     public String getDistrictName()
@@ -47,13 +41,13 @@ public class healthCareDistrict
 
     public int getWeeklyInfections(int wNum)
     {
-        weeklyInfections = infPerWeek.get(wNum);
+        weeklyInfections = infectionsPerWeek.get(wNum);
         return weeklyInfections;
     }
 
-    public HashMap<Integer, Integer> getInfPerWeek()
+    public HashMap<Integer, Integer> getInfectionsPerWeek()
     {
-        return infPerWeek;
+        return infectionsPerWeek;
     }
 
     public int getId()
@@ -72,7 +66,7 @@ public class healthCareDistrict
     {
         int maxWeekNum = 0;
 
-        for (int i = 1; i < infPerWeek.size(); i++) {
+        for (int i = 0; i < infectionsPerWeek.size(); i++) {
             maxWeekNum++;
         }
         return maxWeekNum;

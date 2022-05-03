@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 // This class implements the functionalities for fragment_login interface.
-public class Login extends Fragment
+public class LogIn extends Fragment
 {
     Button bt_login;
     Button bt_register;
@@ -51,7 +50,7 @@ public class Login extends Fragment
                 {
                     Fragment fragment = null;
                     try {
-                        fragment = (Fragment) register.class.newInstance();
+                        fragment = (Fragment) Register.class.newInstance();
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     } catch (java.lang.InstantiationException e) {
@@ -104,14 +103,14 @@ public class Login extends Fragment
                     {
                         credentialsDataBase.setUsername(username);
 
-                        handleCSV handler = handleCSV.getInstance();
+                        HandleCSV handler = HandleCSV.getInstance();
                         handler.getFavouritesFromCSV(getActivity().getApplicationContext());
 
                         Toast.makeText(getActivity(), "Kirjautuminen onnistui", Toast.LENGTH_SHORT).show();
 
                         Fragment fragment = null;
                         try {
-                            fragment = (Fragment) home.class.newInstance();
+                            fragment = (Fragment) Home.class.newInstance();
                         } catch (IllegalAccessException | java.lang.InstantiationException e) {
                             e.printStackTrace();
                         }

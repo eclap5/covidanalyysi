@@ -15,9 +15,9 @@ import java.time.format.DateTimeFormatter;
 
 
 // This class implements the functionalities for home screen interface fragment_home.
-public class home extends Fragment
+public class Home extends Fragment
 {
-    covidData jsonData = covidData.getInstance();
+    CovidData jsonData = CovidData.getInstance();
     CredentialsDataBase credentialsDataBase = CredentialsDataBase.getInstance();
     TextView infecs;
     TextView date;
@@ -43,7 +43,7 @@ public class home extends Fragment
         }
 
         // Sets the value for all infections from the start time of data to the current date.
-        infNum = jsonData.getHCD_array().get(21).getWeeklyInfections(jsonData.getHCD_array().get(jsonData.getHCDId()).getMaxWeekNum());
+        infNum = jsonData.getHCDArray().get(21).getWeeklyInfections(jsonData.getHCDArray().get(jsonData.getHCDId()).getMaxWeekNum());
         value = String.valueOf(infNum);
         infecs.setText(value);
         date.setText(getDate());

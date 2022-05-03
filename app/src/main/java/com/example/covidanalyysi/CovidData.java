@@ -19,26 +19,25 @@ import java.util.ArrayList;
 // JSON data is read in this class, and it has been implemented
 // using singleton, so data will remain unaltered during execution.
 
-public class covidData
+public class CovidData
 {
-    private ArrayList<healthCareDistrict> HCD_array = new ArrayList<>();
-    private ArrayList<healthCareDistrict> fav_Array = new ArrayList<>();
-    private JSONObject DW_labels = null;
+    private ArrayList<HealthCareDistrict> HCDArray = new ArrayList<>();
+    private ArrayList<HealthCareDistrict> favouritesArray = new ArrayList<>();
+    private JSONObject DWLabels = null;
 
     // Current spinner healthcare district id.
     // Default to 21 "Kaikki alueet".
     private int HCDId = 21;
     private int favIndex;
-    sortWeeks time = new sortWeeks();
 
-    private covidData()
+    private CovidData()
     {
 
     }
 
-    private static covidData JSONData = new covidData();
+    private static CovidData JSONData = new CovidData();
 
-    public static covidData getInstance()
+    public static CovidData getInstance()
     {
         return JSONData;
     }
@@ -82,54 +81,61 @@ public class covidData
     // In this method data is first split into smaller objects.
     // Also objects are made from healthCareDistrict.java and the values
     // of sorted THL data are added to the objects.
-    // Objects are added to the arraylist HCD_array.
+    // Objects are added to the arraylist HCDArray.
+    // To cut the infections for proper healthcare district we us variable with value of
+    // 157 to cut the JSON array when the HCD changes. 158 will be added to variable so next infections
+    // will cut from correct position.
     public void sortData()
     {
         int j = 0;
+        int infectionsWeeklyIndex = 157;
         try
         {
             JSONObject dataset = getJSON().getJSONObject("dataset");
             JSONObject dimensions = dataset.getJSONObject("dimension");
 
             JSONObject HCD = dimensions.getJSONObject("hcdmunicipality2020");
-            JSONObject HCD_category = HCD.getJSONObject("category");
-            JSONObject HCD_index = HCD_category.getJSONObject("index");
-            JSONObject HCD_labels = HCD_category.getJSONObject("label");
+            JSONObject HCDCategory = HCD.getJSONObject("category");
+            JSONObject HCDIndex = HCDCategory.getJSONObject("index");
+            JSONObject HCDLabels = HCDCategory.getJSONObject("label");
 
             JSONObject dateWeeks = dimensions.getJSONObject("dateweek20200101");
-            JSONObject DW_category = dateWeeks.getJSONObject("category");
-            JSONObject DW_index = DW_category.getJSONObject("index");
-            DW_labels = DW_category.getJSONObject("label");
+            JSONObject DWCategory = dateWeeks.getJSONObject("category");
+            JSONObject DWIndex = DWCategory.getJSONObject("index");
+            DWLabels = DWCategory.getJSONObject("label");
 
             JSONObject infections = dataset.getJSONObject("value");
 
-            JSONArray HCD_key = HCD_index.names();
-            JSONArray DW_key = DW_index.names();
-            JSONArray inf_key = infections.names();
+            JSONArray HCDIndexKey = HCDIndex.names();
+            JSONArray DWIndexKey = DWIndex.names();
+            JSONArray infectionsKey = infections.names();
 
-            for (int i = 0; i < HCD_key.length(); i++)
+            for (int i = 0; i < HCDIndexKey.length(); i++)
             {
-                String HCD_keys = HCD_key.getString(i);
-                healthCareDistrict dist = new healthCareDistrict();
-                dist.setDistrictName(HCD_labels.getString(HCD_keys));
-                dist.setId(HCD_index.getInt(HCD_keys));
+                String HCDKeys = HCDIndexKey.getString(i);
+                HealthCareDistrict dist = new HealthCareDistrict();
+                dist.setDistrictName(HCDLabels.getString(HCDKeys));
+                dist.setId(HCDIndex.getInt(HCDKeys));
 
-                for (int k = 0; k < DW_key.length(); k++, j++)
+                for (int k = 0; k < DWIndexKey.length(); k++, j++)
                 {
-                    String DW_keys = DW_key.getString(k);
-                    if (DW_index.getInt(DW_keys) == ((158 - 52) + time.getWeekNum() - 1))
+                    String DWKeys = DWIndexKey.getString(k);
+                    if (infectionsKey.getInt(j) == infectionsWeeklyIndex)
                     {
+                        String infectionsKeys = infectionsKey.getString(j);
+                        dist.setWeeklyInfections(DWIndex.getInt(DWKeys), infections.getInt(infectionsKeys));
+                        infectionsWeeklyIndex += 158;
                         break;
                     }
                     else
                     {
-                        String inf_keys = inf_key.getString(j);
-                        dist.setWeekNum(DW_index.getInt(DW_keys));
-                        dist.setWeeklyInfections(DW_index.getInt(DW_keys), infections.getInt(inf_keys));
+                        String inf_keys = infectionsKey.getString(j);
+                        dist.setWeeklyInfections(DWIndex.getInt(DWKeys), infections.getInt(inf_keys));
                     }
                 }
-                HCD_array.add(dist);
+                HCDArray.add(dist);
             }
+            trimHCDArray();
         }
         catch (JSONException e)
         {
@@ -138,20 +144,32 @@ public class covidData
     }
 
 
-    // This method adds an object to the arraylist containing favourites. (fav_Array)
-    public void addFavourites(healthCareDistrict fav)
+    // In the start of the hashmap in HealthCareDistrict object there is one extra
+    // key and value at the key 0. This method removes the 0 key and value, so
+    // HashMap start value is 1.
+    public void trimHCDArray()
     {
-        fav_Array.add(fav);
+        for (int i = 0; i < HCDArray.size(); i++)
+        {
+            HCDArray.get(i).getInfectionsPerWeek().remove(0);
+        }
     }
 
-    public ArrayList<healthCareDistrict> getFav_Array()
+
+    // This method adds an object to the arraylist containing favourites. (favouritesArray)
+    public void addFavourites(HealthCareDistrict fav)
     {
-        return fav_Array;
+        favouritesArray.add(fav);
     }
 
-    public ArrayList<healthCareDistrict> getHCD_array()
+    public ArrayList<HealthCareDistrict> getFavouritesArray()
     {
-        return HCD_array;
+        return favouritesArray;
+    }
+
+    public ArrayList<HealthCareDistrict> getHCDArray()
+    {
+        return HCDArray;
     }
 
 
@@ -182,8 +200,8 @@ public class covidData
 
     // This method returns the JSON object containing weeks and years as Strings.
     // Used to format time selection spinner items to a readable form.
-    public JSONObject getDW_labels()
+    public JSONObject getDWLabels()
     {
-        return DW_labels;
+        return DWLabels;
     }
 }

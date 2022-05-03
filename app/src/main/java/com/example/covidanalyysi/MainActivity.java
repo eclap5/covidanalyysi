@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        covidData jsonData = covidData.getInstance();
+        CovidData jsonData = CovidData.getInstance();
         jsonData.sortData();
-        jsonData.getHCD_array().get(jsonData.getHCDId()).getInfPerWeek();
+        jsonData.getHCDArray().get(jsonData.getHCDId()).getInfectionsPerWeek();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         try
         {
-            fragment = (Fragment) home.class.newInstance();
+            fragment = (Fragment) Home.class.newInstance();
         }
         catch (Exception e)
         {
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         switch (menuItem.getItemId())
         {
             case R.id.nav_first_fragment:
-                fragmentClass = home.class;
+                fragmentClass = Home.class;
                 break;
 
             case R.id.nav_second_fragment:
@@ -108,16 +108,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_third_fragment:
-                fragmentClass = favourites.class;
+                fragmentClass = Favourites.class;
                 break;
             case R.id.nav_fourth_fragment:
-                fragmentClass = information.class;
+                fragmentClass = Information.class;
                 break;
             case R.id.nav_fifth_fragment:
-                fragmentClass = Login.class;
+                fragmentClass = LogIn.class;
                 break;
             default:
-                fragmentClass = home.class;
+                fragmentClass = Home.class;
         }
 
         try

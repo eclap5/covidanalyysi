@@ -13,10 +13,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-// This class handles time and weekly strings from DW_labels JSON object.
-public class sortWeeks
+// This class handles time and weekly strings from DWLabels JSON object.
+public class SortWeeks
 {
-    public sortWeeks()
+    public SortWeeks()
     {
 
     }
@@ -35,7 +35,7 @@ public class sortWeeks
     }
 
 
-    // This method sorts the weekly strings from JSON object "DW_labels"
+    // This method sorts the weekly strings from JSON object "DWLabels"
     // and adds the strings to an arraylist.
     public ArrayList<String> getWeekArray(JSONObject DW_labels)
     {

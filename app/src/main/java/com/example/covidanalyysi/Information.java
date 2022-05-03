@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 
 // Sets the functionalities for the information interface fragment_information.
-public class information extends Fragment
+public class Information extends Fragment
 {
     TextView linkText;
     TextView linkText2;

@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 // This class implements the functionalities for fragment_register interface.
-public class register extends Fragment
+public class Register extends Fragment
 {
     Button bt_register;
     EditText et_username;
@@ -38,7 +38,7 @@ public class register extends Fragment
         CredentialsDataBase credentialsDataBase = CredentialsDataBase.getInstance();
 
         // Button click checks the username from credential database and creates new user.
-        // If required fields are not filled or requirements are not met the app will infrom user with toast notification.
+        // If required fields are not filled or requirements are not met the app will inform user with toast notification.
         // Fragment will be changed to home page.
         bt_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +81,7 @@ public class register extends Fragment
                                 Fragment fragment = null;
                                 try
                                 {
-                                    fragment = (Fragment) home.class.newInstance();
+                                    fragment = (Fragment) Home.class.newInstance();
                                 } catch (IllegalAccessException e)
                                 {
                                     e.printStackTrace();
